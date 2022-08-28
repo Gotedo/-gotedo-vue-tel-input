@@ -1,13 +1,13 @@
 {
-  "name": "vue-tel-input",
+  "name": "@gotedo/vue-tel-input",
   "version": "5.11.0",
   "description": "International Telephone Input with Vue",
-  "author": "Steven Dao <iamstevendao@gmail.com>",
+  "author": "Ndianabasi Udonkang <ndianabasi@gotedo.com>",
   "license": "MIT",
-  "homepage": "https://vue-tel-input.iamstevendao.com",
+  "homepage": "",
   "repository": {
     "type": "git",
-    "url": "https://github.com/iamstevendao/vue-tel-input.git"
+    "url": "https://github.com/Gotedo/vue-tel-input.git"
   },
   "scripts": {
     "dev": "vuepress dev docs",
