@@ -22,6 +22,9 @@
     "test": "jest",
     "release": "npm run prepublishOnly && np"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "files": [
     "dist/",
     "dist-modern/"
