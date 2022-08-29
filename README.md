@@ -12,6 +12,10 @@ International Telephone Input with Vue.
 <img width="600" alt="In-action GIF" src="https://thumbs.gfycat.com/EducatedPoliteBluefintuna-size_restricted.gif"/>
 </p>
 
+## Credits
+
+This repo is an offshoot clone of the [vue-tel-input](https://github.com/iamstevendao/vue-tel-input) project by [Steven Dao](https://github.com/iamstevendao)
+
 ## Documentation and Demo
 
 [Visit the website](https://iamstevendao.github.io/vue-tel-input/)
@@ -84,8 +88,8 @@ Or use the component directly:
 
   export default {
     components: {
-      VueTelInput,
-    },
+      VueTelInput
+    }
   };
 </script>
 
@@ -96,7 +100,10 @@ Or use the component directly:
 
 ```html
 <script src="https://unpkg.com/vue-tel-input"></script>
-<link rel="stylesheet" href="https://unpkg.com/vue-tel-input/dist/vue-tel-input.css" />
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/vue-tel-input/dist/vue-tel-input.css"
+/>
 ```
 
 **If Vue is detected in the Page, the plugin is installed automatically.**
@@ -122,7 +129,7 @@ Vue.use(window['vue-tel-input']);
 
     export default {
       name: 'TelephoneInput',
-      mixins: [abstractField],
+      mixins: [abstractField]
     };
   </script>
   ```
@@ -144,9 +151,9 @@ Vue.use(window['vue-tel-input']);
       {
         type: 'tel-input',
         label: 'Awesome (tel input)',
-        model: 'telephone',
-      },
-    ],
+        model: 'telephone'
+      }
+    ]
   };
   ```
 
@@ -165,13 +172,15 @@ Since the library is about 200kb of JavaScript and 100kb of CSS in order to impr
   const VueTelInput = () =>
     Promise.all([
       import(/* webpackChunkName: "chunk-vue-tel-input" */ 'vue-tel-input'),
-      import(/* webpackChunkName: "chunk-vue-tel-input" */ 'vue-tel-input/dist/vue-tel-input.css'),
+      import(
+        /* webpackChunkName: "chunk-vue-tel-input" */ 'vue-tel-input/dist/vue-tel-input.css'
+      )
     ]).then(([{ VueTelInput }]) => VueTelInput);
 
   export default {
     components: {
-      VueTelInput,
-    },
+      VueTelInput
+    }
   };
 </script>
 ```
