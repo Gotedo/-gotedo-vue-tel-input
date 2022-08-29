@@ -1,7 +1,10 @@
 import Vue from 'vue';
 import { shallowMount } from '@vue/test-utils';
-import VueTelInput from './vue-tel-input.vue';
+import {
+  describe, it, expect, jest, beforeEach,
+} from '@jest/globals';
 import * as utils from '../utils';
+import VueTelInput from './vue-tel-input.vue';
 
 describe('vue-tel-input', () => {
   beforeEach(() => {
@@ -40,18 +43,7 @@ describe('Props', () => {
       expect(wrapper.find('.vti__selection > .vti__flag').classes()).toContain('au');
     });
   });
-  // describe(':customValidate', () => {
-  //   it('tests custom validation on type', () => {
-  //     const wrapper = shallowMount(VueTelInput, {
-  //       propsData: {
-  //         customValidate: new RegExp('^[()-+0-9s]*$'),
-  //       },
-  //     });
-  //     wrapper.vm.testCustomValidate = jest.fn();
-  //     wrapper.vm.onInput();
-  //     expect(wrapper.vm.testCustomValidate).toHaveBeenCalledTimes(1);
-  //   });
-  // });
+
   describe(':defaultCountry', () => {
     it('shows correct default country', async () => {
       const wrapper = shallowMount(VueTelInput, {
@@ -63,6 +55,7 @@ describe('Props', () => {
       expect(wrapper.find('.vti__selection > .vti__flag').classes()).toContain('au');
     });
   });
+
   describe(':defaultCountryByDialCode', () => {
     it('shows correct default country by dial code', async () => {
       const wrapper = shallowMount(VueTelInput, {
@@ -85,6 +78,7 @@ describe('Props', () => {
       expect(wrapper.find('.vue-tel-input').classes()).toContain('disabled');
       expect(wrapper.find('.vti__input').attributes('disabled')).toBe('disabled');
     });
+
     it('stops showing dropdown list when true', () => {
       const wrapper = shallowMount(VueTelInput, {
         propsData: {
@@ -96,8 +90,9 @@ describe('Props', () => {
       expect(wrapper.vm.open).toBe(false);
     });
   });
+
   describe(':autoDefaultCountry', () => {
-    it('doesn\'t fetch the country by IP when set FALSE', async () => {
+    it("doesn't fetch the country by IP when set FALSE", async () => {
       utils.getCountry.mockReset();
       const wrapper = shallowMount(VueTelInput, {
         propsData: {
@@ -110,6 +105,7 @@ describe('Props', () => {
       expect(wrapper.find('.vti__selection > .vti__flag').classes()).toContain('au');
     });
   });
+
   describe(':dropdownOptions', () => {
     it('.tabindex sets tabindex for dropdown', () => {
       const wrapper = shallowMount(VueTelInput, {
@@ -133,6 +129,7 @@ describe('Props', () => {
 
       expect(wrapper.find('.vti__dropdown-item span').exists()).toBeFalsy();
     });
+
     it('.showDialCodeInSelection shows country code in the selection if TRUE', async () => {
       const wrapper = shallowMount(VueTelInput, {
         propsData: {
@@ -145,6 +142,7 @@ describe('Props', () => {
       await Vue.nextTick();
       expect(wrapper.find('.vti__selection > .vti__country-code').text()).toBe('+61');
     });
+
     it('.showFlags hides flags in the dropdown list if FALSE', () => {
       const wrapper = shallowMount(VueTelInput, {
         propsData: {
@@ -169,6 +167,7 @@ describe('Props', () => {
       expect(wrapper.find('.vti__dropdown-item > .vti__flag.au').exists()).toBeFalsy();
     });
   });
+
   describe(':inputOptions', () => {
     it('.id sets `id` native attribute of input', () => {
       const wrapper = shallowMount(VueTelInput, {
@@ -188,6 +187,7 @@ describe('Props', () => {
 
       expect(wrapper.find('.vti__input').attributes('maxlength')).toBe('20');
     });
+
     it('.name sets `name` native attribute of input', () => {
       const wrapper = shallowMount(VueTelInput, {
         propsData: {
@@ -206,25 +206,16 @@ describe('Props', () => {
 
       expect(wrapper.find('.vti__input').classes()).toContain('test');
     });
-    // it('.dynamicPlaceholder generates a random number as placeholder', async () => {
-    //   const wrapper = shallowMount(VueTelInput, {
-    //     propsData: {
-    //       inputOptions: { dynamicPlaceholder: true },
-    //       defaultCountry: 'au',
-    //     },
-    //   });
-    //   await new Promise((res) => setTimeout(() => {
-    //     expect(wrapper.find('.vti__input').attributes('placeholder')).toContain('+61 ');
-    //     res();
-    //   }, 2000));
-    // });
   });
+
   describe(':invalid-msg', () => {
     // TODO
   });
+
   describe(':mode', () => {
     // TODO
   });
+
   describe(':onlyCountries', () => {
     it('limits the countries to be used', () => {
       const wrapper = shallowMount(VueTelInput, {
@@ -242,6 +233,7 @@ describe('Props', () => {
       expect(wrapper.vm.filteredCountries).toHaveLength(1);
     });
   });
+
   describe(':preferredCountries', () => {
     it('are highlighted and be on top of the dropdown', () => {
       const wrapper = shallowMount(VueTelInput, {
@@ -256,12 +248,16 @@ describe('Props', () => {
       });
 
       expect(wrapper.vm.sortedCountries[0].iso2).toBe('AU');
-      expect(wrapper.find('.vti__dropdown-item > .vti__flag.au').element.parentElement.getAttribute('class')).toContain('preferred');
+      expect(wrapper.find('.vti__dropdown-item > .vti__flag.au').element.parentElement.getAttribute('class')).toContain(
+        'preferred',
+      );
     });
   });
+
   describe(':validCharactersOnly', () => {
     // TODO
   });
+
   describe(':styleClasses', () => {
     it('sets classes along side with .vue-tel-input', () => {
       const wrapper = shallowMount(VueTelInput, {

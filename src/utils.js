@@ -36,14 +36,15 @@ export const allProps = [
     name: 'allCountries',
     type: Array,
     default: allCountries,
-    description: 'All countries that are used in <code>libphonenumber-js</code>, can be overridden by this prop',
+    description:
+      'All countries that are used in <code>libphonenumber-js</code>, can be overridden by this prop',
     inDemo: false,
   },
   {
     name: 'autoFormat',
     type: Boolean,
     default: true,
-    description: 'Auto update the input to the formatted phone number when it\'s valid',
+    description: "Auto update the input to the formatted phone number when it's valid",
     inDemo: true,
   },
   {
@@ -57,7 +58,8 @@ export const allProps = [
     name: 'defaultCountry',
     default: '',
     type: [String, Number],
-    description: 'Default country (by iso2 or dialCode), will override the country fetched from IP address of user',
+    description:
+      'Default country (by iso2 or dialCode), will override the country fetched from IP address of user',
     inDemo: false,
   },
   {
@@ -250,7 +252,10 @@ export const allProps = [
     name: 'mode',
     default: 'auto',
     type: String,
-    description: 'Allowed values: <code>\'auto\'</code> (Default set by phone),  <code>\'international\'</code> (Format number with the dial code i.e. + 61), <code>\'national\'</code> (Format number without dial code i.e. 0321232)',
+    description:
+      `Allowed values: <code>'auto'</code> (Default set by phone),
+      <code>'international'</code> (Format number with the dial code i.e. + 61),
+      <code>'national'</code> (Format number without dial code i.e. 0321232)`,
     inDemo: true,
     options: ['auto', 'national', 'international'],
   },
@@ -279,25 +284,27 @@ export const allProps = [
     name: 'validCharactersOnly',
     default: false,
     type: Boolean,
-    description: 'Only allow valid characters in a phone number (will also verify in <code>mounted</code>, so phone number with invalid characters will be shown as an empty string)',
+    description:
+      `Only allow valid characters in a phone number
+      (will also verify in <code>mounted</code>, so phone number with invalid characters
+      will be shown as an empty string)`,
     inDemo: false,
   },
 ];
 
-export const defaultOptions = [...allProps]
-  .reduce((prv, crr) => {
-    if (crr.name.includes('.')) {
-      const [key, nestedKey] = crr.name.split('.');
-      if (prv[key]) {
-        Object.assign(prv[key], { [nestedKey]: crr.default });
-      } else {
-        Object.assign(prv, { [key]: { [nestedKey]: crr.default } });
-      }
+export const defaultOptions = [...allProps].reduce((prv, crr) => {
+  if (crr.name.includes('.')) {
+    const [key, nestedKey] = crr.name.split('.');
+    if (prv[key]) {
+      Object.assign(prv[key], { [nestedKey]: crr.default });
     } else {
-      Object.assign(prv, { [crr.name]: crr.default });
+      Object.assign(prv, { [key]: { [nestedKey]: crr.default } });
     }
-    return prv;
-  }, {});
+  } else {
+    Object.assign(prv, { [crr.name]: crr.default });
+  }
+  return prv;
+}, {});
 
 export default {
   options: { ...defaultOptions },

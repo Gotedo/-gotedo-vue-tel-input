@@ -23,7 +23,7 @@
           +{{ activeCountry && activeCountry.dialCode }}
         </span>
         <slot name="arrow-icon" :open="open">
-          <span class="vti__dropdown-arrow">{{ open ? "▲" : "▼" }}</span>
+          <span class="vti__dropdown-arrow">{{ open ? '▲' : '▼' }}</span>
         </slot>
       </span>
       <ul
@@ -36,28 +36,25 @@
       >
         <input
           v-if="dropdownOptions.showSearchBox"
+          v-model="searchQuery"
           class="vti__input vti__search_box"
           aria-label="Search by country name or country code"
           :placeholder="sortedCountries.length ? sortedCountries[0].name : ''"
           type="text"
-          v-model="searchQuery"
           @click.stop
         />
         <li
           v-for="(pb, index) in sortedCountries"
+          :key="pb.iso2 + (pb.preferred ? '-preferred' : '')"
           role="option"
           :class="['vti__dropdown-item', getItemClass(index, pb.iso2)]"
-          :key="pb.iso2 + (pb.preferred ? '-preferred' : '')"
           tabindex="-1"
+          :aria-selected="activeCountryCode === pb.iso2 && !pb.preferred"
           @click="choose(pb)"
           @mousemove="selectedIndex = index"
-          :aria-selected="activeCountryCode === pb.iso2 && !pb.preferred"
         >
           <div class="vti__flag-wrapper">
-            <span
-              v-if="dropdownOptions.showFlags"
-              :class="['vti__flag', pb.iso2.toLowerCase()]"
-            />
+            <span v-if="dropdownOptions.showFlags" :class="['vti__flag', pb.iso2.toLowerCase()]" />
           </div>
           <strong>{{ pb.name }}</strong>
           <span v-if="dropdownOptions.showDialCodeInList"> +{{ pb.dialCode }} </span>
@@ -65,14 +62,14 @@
       </ul>
     </div>
     <input
-      v-model="phone"
+      :id="inputOptions.id"
       ref="input"
+      v-model="phone"
       :type="inputOptions.type"
       :autocomplete="inputOptions.autocomplete"
       :autofocus="inputOptions.autofocus"
       :class="['vti__input', inputOptions.styleClasses]"
       :disabled="disabled"
-      :id="inputOptions.id"
       :maxlength="inputOptions.maxlength"
       :name="inputOptions.name"
       :placeholder="parsedPlaceholder"
@@ -223,32 +220,33 @@ export default {
     filteredCountries() {
       // List countries after filtered
       if (this.onlyCountries.length) {
-        return this.allCountries
-          .filter(({ iso2 }) => this.onlyCountries.some((c) => c.toUpperCase() === iso2));
+        return this.allCountries.filter(({ iso2 }) => this.onlyCountries.some((c) => c.toUpperCase() === iso2));
       }
 
       if (this.ignoredCountries.length) {
-        return this.allCountries.filter(
-          ({ iso2 }) => !this.ignoredCountries.includes(iso2.toUpperCase())
-            && !this.ignoredCountries.includes(iso2.toLowerCase()),
-        );
+        return this.allCountries.filter(({ iso2 }) => (
+          !this.ignoredCountries.includes(iso2.toUpperCase())
+            && !this.ignoredCountries.includes(iso2.toLowerCase())
+        ));
       }
 
       return this.allCountries;
     },
     sortedCountries() {
       // Sort the list countries: from preferred countries to all countries
-      const preferredCountries = this.getCountries(this.preferredCountries)
-        .map((country) => ({ ...country, preferred: true }));
+      const preferredCountries = this.getCountries(this.preferredCountries).map((country) => ({
+        ...country,
+        preferred: true,
+      }));
       const countriesList = [...preferredCountries, ...this.filteredCountries];
       if (!this.dropdownOptions.showSearchBox) {
         return countriesList;
       }
-      return countriesList.filter(
-        (c) => (new RegExp(this.searchQuery, 'i')).test(c.name)
-          || (new RegExp(this.searchQuery, 'i')).test(c.iso2)
-          || (new RegExp(this.searchQuery, 'i')).test(c.dialCode),
-      );
+      return countriesList.filter((c) => (
+        new RegExp(this.searchQuery, 'i').test(c.name)
+          || new RegExp(this.searchQuery, 'i').test(c.iso2)
+          || new RegExp(this.searchQuery, 'i').test(c.dialCode)
+      ));
     },
     phoneObject() {
       if (!this.finishMounted) {
@@ -266,10 +264,7 @@ export default {
         Object.assign(result, { country: '--' });
       }
 
-      const {
-        metadata,
-        ...phoneObject
-      } = result;
+      const { metadata, ...phoneObject } = result;
 
       let valid = result.isValid?.();
       let formatted = this.phone;
@@ -363,9 +358,7 @@ export default {
 
     this.initializeCountry()
       .then(() => {
-        if (!this.phone
-          && this.inputOptions?.showDialCode
-          && this.activeCountryCode) {
+        if (!this.phone && this.inputOptions?.showDialCode && this.activeCountryCode) {
           this.phone = `+${this.activeCountryCode}`;
         }
         this.$emit('validate', this.phoneObject);
@@ -481,16 +474,13 @@ export default {
         return;
       }
 
-      if (this.phone?.[0] === '+'
-        && parsedCountry.iso2
-        && this.phoneObject.nationalNumber) {
+      if (this.phone?.[0] === '+' && parsedCountry.iso2 && this.phoneObject.nationalNumber) {
         this.activeCountryCode = parsedCountry.iso2;
         // Attach the current phone number with the newly selected country
         this.phone = parsePhoneNumberFromString(
           this.phoneObject.nationalNumber,
           parsedCountry.iso2,
-        )
-          .formatInternational();
+        ).formatInternational();
         return;
       }
 
@@ -634,7 +624,9 @@ export default {
       }
     },
     reset() {
-      this.selectedIndex = this.sortedCountries.map((c) => c.iso2).indexOf(this.activeCountryCode);
+      this.selectedIndex = this.sortedCountries
+        .map((c) => c.iso2)
+        .indexOf(this.activeCountryCode);
       this.open = false;
     },
     setDropdownPosition() {

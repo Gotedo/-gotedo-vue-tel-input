@@ -3,42 +3,36 @@
 module.exports = {
   root: true,
   env: {
-    'node': true,
+    node: true,
+    jest: true,
   },
-  extends: [
-    'plugin:vue/essential',
-    '@vue/airbnb',
-    'plugin:jest/recommended',
-  ],
-  plugins: ['vue'],
+  extends: ["plugin:vue/essential", "@vue/airbnb"],
+  plugins: ["vue"],
   parserOptions: {
-    parser: '@babel/eslint-parser',
+    parser: "@babel/eslint-parser",
   },
   // add your custom rules here
   rules: {
     // disallow reassignment of function parameters
     // disallow parameter object manipulation except for specific exclusions
-    'no-param-reassign': ['error', {
-      props: true,
-      ignorePropertyModificationsFor: [
-        'el',
-      ]
-    }],
-    'func-names': 'off',
-    'no-console': [
-      'warn',
-      { allow: ['warn', 'error'] },
-    ],
-    // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-underscore-dangle': [
-      'error',
+    "no-param-reassign": [
+      "error",
       {
-        allow: [
-          '__vueClickOutside__'
-        ]
-      }
+        props: true,
+        ignorePropertyModificationsFor: ["el"],
+      },
     ],
-    'jest/prefer-to-have-length': 'warn',
+    "func-names": "off",
+    "no-console": ["warn", { allow: ["warn", "error"] }],
+    // allow debugger during development
+    "no-debugger": process.env.NODE_ENV === "production" ? "error" : "off",
+    "no-underscore-dangle": [
+      "error",
+      {
+        allow: ["__vueClickOutside__"],
+      },
+    ],
+    "arrow-body-style": ["error", "as-needed"],
+    "max-len": ["error", { code: 120 }],
   },
-}
+};
