@@ -6,7 +6,7 @@
 
 International Telephone Input with Vue.
 
-[![npm](https://img.shields.io/npm/dt/vue-tel-input.svg)](https://www.npmjs.com/package/vue-tel-input) [![stars](https://img.shields.io/github/stars/iamstevendao/vue-tel-input.svg)](https://github.com/iamstevendao/vue-tel-input)
+[![npm](https://img.shields.io/npm/dt/@gotedo/vue-tel-input.svg)](https://www.npmjs.com/package/@gotedo/vue-tel-input) [![stars](https://img.shields.io/github/stars/gotedo/vue-tel-input.svg)](https://github.com/gotedo/vue-tel-input)
 
 <p align="center">
 <img width="600" alt="In-action GIF" src="https://thumbs.gfycat.com/EducatedPoliteBluefintuna-size_restricted.gif"/>
@@ -18,30 +18,26 @@ This repo is an offshoot clone of the [vue-tel-input](https://github.com/iamstev
 
 ## Documentation and Demo
 
-[Visit the website](https://iamstevendao.github.io/vue-tel-input/)
-
-## Vue 3 Support
-
-`vue-tel-input@next`: [Guide](https://iamstevendao.github.io/vue-tel-input/documentation/next.html)
+[Readme](https://github.com/gotedo/vue-tel-input)
 
 ## Changelog
 
-[Go to Github Releases](https://github.com/iamstevendao/vue-tel-input/releases)
+[Go to Github Releases](https://github.com/gotedo/vue-tel-input/releases)
 
 ## Getting started
 
 - Install the plugin:
 
   ```sh
-  npm install vue-tel-input
+  npm install @gotedo/vue-tel-input
   ```
 
 - Add the plugin into your app:
 
   ```javascript
   import Vue from 'vue';
-  import VueTelInput from 'vue-tel-input';
-  import 'vue-tel-input/dist/vue-tel-input.css';
+  import VueTelInput from '@gotedo/vue-tel-input';
+  import '@gotedo/vue-tel-input/dist/vue-tel-input.css';
 
   Vue.use(VueTelInput);
   ```
@@ -68,13 +64,13 @@ Install the plugin into Vue:
 
 ```javascript
 import Vue from 'vue';
-import VueTelInput from 'vue-tel-input';
-import 'vue-tel-input/dist/vue-tel-input.css';
+import VueTelInput from '@gotedo/vue-tel-input';
+import '@gotedo/vue-tel-input/dist/vue-tel-input.css';
 
 Vue.use(VueTelInput, options); // Define default global options here (optional)
 ```
 
-> View all available options in [Props](https://iamstevendao.github.io/vue-tel-input/documentation/props.html).
+> View all available options in [Props](https://github.com/gotedo/vue-tel-input#props).
 
 Or use the component directly:
 
@@ -84,7 +80,7 @@ Or use the component directly:
   <vue-tel-input v-model="value"></vue-tel-input>
 </template>
 <script>
-  import { VueTelInput } from 'vue-tel-input';
+  import { VueTelInput } from '@gotedo/vue-tel-input';
 
   export default {
     components: {
@@ -93,25 +89,7 @@ Or use the component directly:
   };
 </script>
 
-<style src="vue-tel-input/dist/vue-tel-input.css"></style>
-```
-
-### Browser
-
-```html
-<script src="https://unpkg.com/vue-tel-input"></script>
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/vue-tel-input/dist/vue-tel-input.css"
-/>
-```
-
-**If Vue is detected in the Page, the plugin is installed automatically.**
-
-\*\* Otherwise, manually install the plugin into Vue:
-
-```js
-Vue.use(window['vue-tel-input']);
+<style src="@gotedo/vue-tel-input/dist/vue-tel-input.css"></style>
 ```
 
 ### Use as a custom field of [vue-form-generator](https://github.com/vue-generators/vue-form-generator)
@@ -171,9 +149,11 @@ Since the library is about 200kb of JavaScript and 100kb of CSS in order to impr
 <script>
   const VueTelInput = () =>
     Promise.all([
-      import(/* webpackChunkName: "chunk-vue-tel-input" */ 'vue-tel-input'),
       import(
-        /* webpackChunkName: "chunk-vue-tel-input" */ 'vue-tel-input/dist/vue-tel-input.css'
+        /* webpackChunkName: "chunk-vue-tel-input" */ '@gotedo/vue-tel-input'
+      ),
+      import(
+        /* webpackChunkName: "chunk-vue-tel-input" */ '@gotedo/vue-tel-input/dist/vue-tel-input.css'
       )
     ]).then(([{ VueTelInput }]) => VueTelInput);
 
@@ -192,7 +172,7 @@ As you see, we don't use Vue SFC `<style></style>` tag here to import component'
 Clone the project
 
 ```bash
-  git clone https://github.com/iamstevendao/vue-tel-input.git
+  git clone https://github.com/gotedo/vue-tel-input.git
 ```
 
 Go to the project directory
@@ -217,6 +197,4 @@ Start the server
 ## License
 
 Copyright (c) 2018 Steven Dao.
-Released under the [MIT License](https://github.com/iamstevendao/vue-tel-input/blob/master/LICENSE).
-
-made with &#x2764; by [Steven](https://github.com/iamstevendao).
+Released under the [MIT License](https://github.com/gotedo/vue-tel-input/blob/master/LICENSE).
