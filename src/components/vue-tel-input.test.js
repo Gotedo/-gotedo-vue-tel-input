@@ -248,7 +248,8 @@ describe('Props', () => {
       });
 
       expect(wrapper.vm.sortedCountries[0].iso2).toBe('AU');
-      expect(wrapper.find('.vti__dropdown-item > .vti__flag.au').element.parentElement.getAttribute('class')).toContain(
+      expect(wrapper.find('.vti__dropdown-item .vti__flag.au').element.parentElement
+        .parentElement.getAttribute('class')).toContain(
         'preferred',
       );
     });
