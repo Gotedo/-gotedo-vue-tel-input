@@ -1,6 +1,6 @@
 {
   "name": "@gotedo/vue-tel-input",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "International Telephone Input with Vue",
   "author": "Ndianabasi Udonkang <ndianabasi@gotedo.com>",
   "license": "MIT",
@@ -20,7 +20,7 @@
     "lint:fix": "vue-cli-service lint --fix",
     "prepublishOnly": "npm run build && npm run build:modern",
     "test": "jest",
-    "release": "np"
+    "release": "npm run prepublishOnly && np"
   },
   "publishConfig": {
     "access": "public"
