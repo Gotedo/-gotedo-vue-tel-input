@@ -252,40 +252,43 @@ export default {
       }
 
       let result;
-      if (this.phone?.[0] === "+") {
-        result = parsePhoneNumberFromString(this.phone) || {};
-      } else {
-        result = parsePhoneNumberFromString(this.phone, this.activeCountryCode) || {};
-      }
+      if (typeof this.phone === "string") {
+        if (this.phone.startsWith("+")) {
+          result = parsePhoneNumberFromString(this.phone) || {};
+        } else {
+          result = parsePhoneNumberFromString(this.phone, this.activeCountryCode) || {};
+        }
 
-      if (this.inputOptions.showDialCode && this.phone?.[0] !== "+") {
-        Object.assign(result, { country: "--" });
-      }
-
-      const { metadata, ...phoneObject } = result;
-
-      let valid = result.isValid?.();
-      let formatted = this.phone;
-
-      if (valid) {
-        formatted = result.format?.(this.parsedMode.toUpperCase());
-      }
-
-      if (result.country && (this.ignoredCountries.length || this.onlyCountries.length)) {
-        if (!this.findCountry(result.country)) {
-          valid = false;
+        if (this.inputOptions.showDialCode && !this.phone.startsWith("+")) {
           Object.assign(result, { country: "--" });
         }
+
+        const { metadata, ...phoneObject } = result;
+
+        let valid = result?.isValid?.();
+        let formatted = this.phone;
+
+        if (valid) {
+          formatted = result.format?.(this.parsedMode.toUpperCase());
+        }
+
+        if (result.country && (this.ignoredCountries.length || this.onlyCountries.length)) {
+          if (!this.findCountry(result.country)) {
+            valid = false;
+            Object.assign(result, { country: "--" });
+          }
+        }
+
+        Object.assign(phoneObject, {
+          countryCode: result.country,
+          valid,
+          country: this.activeCountry,
+          formatted,
+        });
+
+        return phoneObject;
       }
-
-      Object.assign(phoneObject, {
-        countryCode: result.country,
-        valid,
-        country: this.activeCountry,
-        formatted,
-      });
-
-      return phoneObject;
+      return {};
     },
   },
   watch: {
@@ -309,6 +312,9 @@ export default {
       this.$emit("validate", this.phoneObject);
     },
     "phoneObject.formatted": function (value) {
+      if (typeof value !== "string") {
+        return;
+      }
       if (!this.autoFormat || this.customValidate) {
         return;
       }
@@ -354,8 +360,10 @@ export default {
 
     this.initializeCountry()
       .then(() => {
-        if (!this.phone && this.inputOptions?.showDialCode && this.activeCountryCode) {
-          this.phone = `+${this.activeCountryCode}`;
+        if (this.inputOptions?.showDialCode && this.activeCountryCode) {
+          if (!this.phone) {
+            this.phone = `+${this.activeCountryCode}`;
+          }
         }
         this.$emit("validate", this.phoneObject);
       })
@@ -455,7 +463,12 @@ export default {
         return;
       }
 
-      if (this.phone?.[0] === "+" && parsedCountry.iso2 && this.phoneObject.nationalNumber) {
+      if (
+        typeof this.phone === "string" &&
+        this.phone.startsWith("+") &&
+        parsedCountry.iso2 &&
+        this.phoneObject.nationalNumber
+      ) {
         this.activeCountryCode = parsedCountry.iso2;
         // Attach the current phone number with the newly selected country
         this.phone = parsePhoneNumberFromString(
@@ -478,13 +491,12 @@ export default {
     },
     cleanInvalidCharacters() {
       const currentPhone = this.phone;
-      if (this.validCharactersOnly) {
-        const results = this.phone.match(/[()\-+0-9\s]*/g);
-        this.phone = results.join("");
-      }
 
       if (this.customValidate && this.customValidate instanceof RegExp) {
         const results = this.phone.match(this.customValidate);
+        this.phone = results.join("");
+      } else if (this.validCharactersOnly) {
+        const results = this.phone.match(/[()\-+0-9\s]*/g);
         this.phone = results.join("");
       }
 
