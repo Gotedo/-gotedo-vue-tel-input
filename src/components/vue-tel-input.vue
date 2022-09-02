@@ -530,7 +530,7 @@ export default {
       this.$emit("input", value, this.phoneObject, this.$refs.input);
     },
     onBlur() {
-      this.$emit("blur");
+      this.$emit("blur", this.phone, this.phoneObject, this.$refs.input);
     },
     onFocus() {
       setCaretPosition(this.$refs.input, this.phone.length);
