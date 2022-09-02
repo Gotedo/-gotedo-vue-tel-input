@@ -33,8 +33,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "core-js": "^3.14.0",
-    "libphonenumber-js": "^1.10.12",
-    "lodash": "^4.17.21"
+    "libphonenumber-js": "^1.10.12"
   },
   "peerDependencies": {
     "vue": "^2.6.14"
@@ -43,7 +42,6 @@
     "@babel/eslint-parser": "^7.15.8",
     "@jest/globals": "^29.0.1",
     "@types/axios": "^0.14.0",
-    "@types/lodash": "^4.14.184",
     "@vue/cli-plugin-babel": "~5.0.0-beta.2",
     "@vue/cli-plugin-eslint": "~5.0.0-beta.2",
     "@vue/cli-plugin-unit-jest": "~5.0.0-beta.2",

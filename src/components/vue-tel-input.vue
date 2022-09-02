@@ -85,7 +85,6 @@
 </template>
 
 <script>
-import isEqual from "lodash/isEqual";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 import clickOutside from "../directives/click-outside";
 import utils, { getCountry, setCaretPosition } from "../utils";
@@ -290,9 +289,6 @@ export default {
         return phoneObject;
       }
       return {};
-    },
-    isPhoneNumberChanged() {
-      return !isEqual(this.value, this.phone);
     },
   },
   watch: {
@@ -524,9 +520,6 @@ export default {
       return this.customValidate instanceof RegExp ? this.customValidate.test(this.phone) : false;
     },
     onInput() {
-      if (!this.isPhoneNumberChanged) {
-        return;
-      }
       this.$refs.input.setCustomValidity(this.phoneObject.valid ? "" : this.invalidMsg);
       // Returns response.number to assign it to v-model (if being used)
       // Returns full response for cases @input is used
@@ -534,15 +527,9 @@ export default {
       this.emitInput(this.phone);
     },
     emitInput(value) {
-      if (!this.isPhoneNumberChanged) {
-        return;
-      }
       this.$emit("input", value, this.phoneObject, this.$refs.input);
     },
     onBlur() {
-      if (!this.isPhoneNumberChanged) {
-        return;
-      }
       this.$emit("blur", this.phone, this.phoneObject, this.$refs.input);
     },
     onFocus() {
